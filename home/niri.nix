@@ -44,6 +44,6 @@
     XCURSOR_THEME = "BreezeX-RosePine-Linux";
     XCURSOR_SIZE = "24";
     QT_QPA_PLATFORMTHEME = "gtk3";
-    NIXOS_OZONE_WL = "1"
+    NIXOS_OZONE_WL = "1";
   };
 }
