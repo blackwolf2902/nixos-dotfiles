@@ -102,7 +102,7 @@ in
       ++
       # Productivity Tools
       (lib.optionals cfg.productivity.enable [
-        onlyoffice-bin
+        onlyoffice-desktopeditors
         zathura
       ])
       ++
