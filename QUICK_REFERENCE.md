@@ -7,10 +7,10 @@
 cd /home/shinobi/Downloads/nixos
 
 # Test build (doesn't apply changes)
-sudo nixos-rebuild build --flake .#zenxtsu
+sudo nixos-rebuild build --flake .#zenxtsu --impure
 
 # Apply configuration
-sudo nixos-rebuild switch --flake .#zenxtsu
+sudo nixos-rebuild switch --flake .#zenxtsu --impure
 
 # Update flake inputs
 nix flake update

@@ -3,12 +3,13 @@
   lib,
   pkgs,
   inputs,
+  hardwareConfig ? /etc/nixos/hardware-configuration.nix,
   ...
 }:
 
 {
   imports = [
-    /etc/nixos/hardware-configuration.nix
+    hardwareConfig
     ./modules/baseline.nix
     ./modules/niri.nix
     ./modules/laptop-hardware.nix

@@ -39,7 +39,10 @@
       nixosConfigurations = {
         zenxtsu = lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs; };
+          specialArgs = { 
+            inherit inputs;
+            hardwareConfig = /etc/nixos/hardware-configuration.nix;
+          };
           modules = [
             ./configuration.nix
             home-manager.nixosModules.home-manager
