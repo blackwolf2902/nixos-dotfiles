@@ -8,7 +8,7 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    /etc/nixos/hardware-configuration.nix
     ./modules/baseline.nix
     ./modules/niri.nix
     ./modules/laptop-hardware.nix
