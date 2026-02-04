@@ -132,10 +132,5 @@ in
       };
       spiceUSBRedirection.enable = true;
     };
-
-    # Add user to libvirtd group if virtualization is enabled
-    users.users.shinobi = lib.mkIf cfg.virtualization.enable {
-      extraGroups = [ "libvirtd" ];
-    };
   };
 }

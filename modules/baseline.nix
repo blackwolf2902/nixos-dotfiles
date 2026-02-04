@@ -55,8 +55,7 @@ in
         "sound"
         "video"
         "audio"
-      ];
-    };
+  ] ++ lib.optionals config.workstation.user-packages.virtualization.enable [ "libvirtd" ];    };
 
     hardware.bluetooth = {
       enable = true;
@@ -134,7 +133,7 @@ in
       # pcscd.enable = true; # yubikey dep - disabled, no yubikey
       libinput.enable = true;
       upower.enable = true;
-      # power-profiles-daemon.enable = true; # conflicts with TLP, using TLP instead
+      power-profiles-daemon.enable = false; # conflicts with TLP, use it as per need
       pipewire = {
         enable = true;
         pulse.enable = true;
@@ -146,14 +145,13 @@ in
 
     systemd.services.flatpak-repo = {
       wantedBy = [ "multi-user.target" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
       path = [ pkgs.flatpak ];
       script = ''
         flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
       '';
-    };
-
-    xdg.portal.enable = true;
-    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+};
 
     system.stateVersion = "25.11";
   };

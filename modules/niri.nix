@@ -12,6 +12,10 @@ in
   options.workstation.niri.enable = lib.mkEnableOption "Niri-based workstation environment with Noctalia Shell";
 
   config = lib.mkIf cfg.enable {
+
+    xdg.portal.enable = true;
+    xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
     programs.niri.enable = true;
 
     programs.yazi = {

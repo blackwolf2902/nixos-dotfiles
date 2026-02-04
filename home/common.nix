@@ -42,5 +42,6 @@
     "eza/theme.yml".source = ../config/eza/eza.main.yml;
     "fastfetch/config.jsonc".source = ../config/fastfetch/main.fastfetch;
     "fastfetch/nezuko.png".source = ../config/icons/nezuko.png;
+    "niri/config.kdl".source = ../config/niri/config.kdl;
   };
 }
