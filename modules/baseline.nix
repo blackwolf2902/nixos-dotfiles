@@ -134,7 +134,7 @@ in
       # pcscd.enable = true; # yubikey dep - disabled, no yubikey
       libinput.enable = true;
       upower.enable = true;
-      power-profiles-daemon.enable = true;
+      # power-profiles-daemon.enable = true; # conflicts with TLP, using TLP instead
       pipewire = {
         enable = true;
         pulse.enable = true;
