@@ -36,7 +36,7 @@ nixos/
 
 1. **Clone this repository** (or use your existing copy):
    ```bash
-   cd /home/shinobi/Downloads/nixos
+   cd /home/shinobi/nixos-dotfiles
    ```
 
 2. **Ensure hardware-configuration.nix exists**:
