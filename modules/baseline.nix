@@ -79,6 +79,16 @@ in
       };
     };
 
+    # Auto-login configuration for Niri
+    services.displayManager.autoLogin = {
+      enable = true;
+      user = "shinobi";
+    };
+
+    # Disable getty on tty1 for auto-login to work properly
+    systemd.services."autovt@tty1".enable = false;
+    systemd.services."getty@tty1".enable = false;
+
     fonts = {
       enableDefaultPackages = true;
       packages = with pkgs; [
