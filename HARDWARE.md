@@ -1,19 +1,23 @@
 # Hardware Configuration
 
-The `hardware-configuration.nix` file is **not included** in this repository as it's hardware-specific and auto-generated.
+## Overview
 
-## Location
+This repository includes a **minimal dummy `hardware-configuration.nix`** for CI/CD validation purposes. On your actual system, you should use the real hardware configuration from `/etc/nixos/`.
 
-This configuration expects `hardware-configuration.nix` to be located at:
-```
-/etc/nixos/hardware-configuration.nix
-```
+## For CI/CD (Garnix, Hydra, etc.)
 
-The `configuration.nix` imports it from this absolute path, so you can work on your dotfiles repo without including hardware-specific settings.
+The included `hardware-configuration.nix` is a minimal dummy file that allows CI systems to validate the flake without requiring actual hardware. It contains:
+- Generic kernel modules
+- Dummy filesystem UUIDs
+- Basic Intel CPU configuration
 
-## Building
+This ensures your configuration can be validated before deployment.
 
-Since the configuration references `/etc/nixos/hardware-configuration.nix`, you need to use the `--impure` flag when building:
+## For Your Actual System
+
+### Option 1: Use /etc/nixos/hardware-configuration.nix (Recommended)
+
+The flake is configured to use `/etc/nixos/hardware-configuration.nix` by default when building with `--impure`:
 
 ```bash
 # Build the configuration
@@ -23,11 +27,25 @@ sudo nixos-rebuild build --flake .#zenxtsu --impure
 sudo nixos-rebuild switch --flake .#zenxtsu --impure
 ```
 
-The `--impure` flag allows Nix to access absolute paths outside the flake directory.
+The `--impure` flag allows Nix to access the real hardware configuration from `/etc/nixos/`.
+
+### Option 2: Replace the dummy file
+
+Alternatively, you can replace the dummy `hardware-configuration.nix` in this repo with your actual one:
+
+```bash
+# Copy your real hardware config
+sudo cp /etc/nixos/hardware-configuration.nix /home/shinobi/Downloads/nixos/
+
+# Build without --impure flag
+sudo nixos-rebuild build --flake .#zenxtsu
+```
+
+**Note:** If you do this, don't commit your real hardware config to the public repo if it contains sensitive information.
 
 ## Generating Your Hardware Configuration
 
-If you don't have it yet, generate your hardware configuration:
+If you need to generate a new hardware configuration:
 
 ```bash
 # Generate and place in /etc/nixos/
@@ -36,7 +54,7 @@ sudo nixos-generate-config
 # This creates /etc/nixos/hardware-configuration.nix
 ```
 
-Or if you're migrating from Fedora:
+Or during NixOS installation:
 
 ```bash
 # Boot from NixOS installer
@@ -50,10 +68,10 @@ sudo nixos-generate-config --root /mnt
 
 The hardware configuration includes:
 - Boot loader settings
-- File system mounts
+- File system mounts and UUIDs
 - Kernel modules for your specific hardware
 - CPU microcode settings
 - Network interfaces
 - Swap configuration
 
-This file is unique to your hardware and stays in `/etc/nixos/` on your system.
+This file is unique to your hardware.

@@ -1,6 +1,3 @@
-# Hardware-specific configuration (auto-generated)
-hardware-configuration.nix
-
 # Build outputs
 result
 result-*

@@ -3,7 +3,7 @@
   lib,
   pkgs,
   inputs,
-  hardwareConfig ? /etc/nixos/hardware-configuration.nix,
+  hardwareConfig ? ./hardware-configuration.nix,
   ...
 }:
 
