@@ -50,7 +50,7 @@ in
         python3
         python3Packages.pip
         python3Packages.virtualenv
-        python3Packages.poetry
+        uv # Modern Python package manager
         ruff # Python linter/formatter
       ])
       ++
