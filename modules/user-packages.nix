@@ -90,7 +90,7 @@ in
       ++
       # Browsers
       (lib.optionals cfg.browsers.enable [
-        zen-browser
+        # zen-browser # not available in nixpkgs
         google-chrome
       ])
       ++
