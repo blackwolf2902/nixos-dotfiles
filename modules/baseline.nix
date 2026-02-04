@@ -12,10 +12,22 @@ in
   options.workstation.baseline.enable = lib.mkEnableOption "Baseline workstation configuration";
 
   config = lib.mkIf cfg.enable {
-    nix.settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
+    nix.settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      auto-optimise-store = true;
+      trusted-users = [
+        "root"
+        "shinobi"
+      ];
+    };
+
+    nix.optimise = {
+      automatic = true;
+      dates = [ "weekly" ];
+    };
 
     nixpkgs.config.allowUnfree = true;
 
@@ -43,7 +55,7 @@ in
     nix.gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 14d";
     };
 
     time.timeZone = "Asia/Kolkata";
@@ -169,7 +181,25 @@ in
       script = ''
         flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
       '';
-};
+    };
+
+    # System information
+    environment.etc."nixos-info".text = ''
+      ╔════════════════════════════════════════════════════════╗
+      ║              NixOS System Information                  ║
+      ╚════════════════════════════════════════════════════════╝
+      
+      Configuration: zenxtsu
+      User: shinobi
+      Desktop: Niri + Noctalia Shell
+      Package Source: NixOS 25.11 (stable)
+      
+      Quick Commands:
+        - rebuild: Apply configuration changes
+        - rebuild-test: Test configuration without switching
+        - nix flake update: Update all inputs
+        - cat /etc/nixos-info: Show this information
+    '';
 
     system.stateVersion = "25.11";
   };

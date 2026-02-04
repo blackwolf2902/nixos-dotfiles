@@ -15,11 +15,15 @@
   
   programs.home-manager.enable = true;
   programs.git = {
-      enable = true;
-      package = pkgs.git;
-      settings = {
-          core.editor = "nvim";
-      };
+    enable = true;
+    package = pkgs.git;
+    userName = "blackwolf2902";
+    userEmail = "nmaru2904@gmail.com";
+    extraConfig = {
+      core.editor = "nvim";
+      init.defaultBranch = "main";
+      pull.rebase = false;
+    };
   };
 
   programs.starship = {
@@ -33,6 +37,9 @@
       color_theme = "tokyo-night";
       theme_background = true;
       truecolor = true;
+      vim_keys = true;
+      rounded_corners = true;
+      update_ms = 1000;
     };
   };
 
