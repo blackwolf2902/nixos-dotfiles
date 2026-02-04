@@ -49,12 +49,12 @@ nixos/
 
 4. **Build the configuration**:
    ```bash
-   sudo nixos-rebuild build --flake .#zenxtsu --impure
+   sudo nixos-rebuild build --flake .#zenxtsu
    ```
 
 5. **Apply the configuration**:
    ```bash
-   sudo nixos-rebuild switch --flake .#zenxtsu --impure
+   sudo nixos-rebuild switch --flake .#zenxtsu
    ```
 
 ### Updating the System
@@ -64,7 +64,7 @@ nixos/
 nix flake update
 
 # Rebuild with new configuration
-sudo nixos-rebuild switch --flake .#zenxtsu --impure
+sudo nixos-rebuild switch --flake .#zenxtsu
 ```
 
 ## 📦 Package Management
@@ -157,7 +157,7 @@ Organized method - see [PACKAGE_GUIDE.md](./PACKAGE_GUIDE.md)
 nix flake check
 
 # View detailed error output
-sudo nixos-rebuild build --flake .#zenxtsu --impure --show-trace
+sudo nixos-rebuild build --flake .#zenxtsu --show-trace
 ```
 
 ### Package Not Found

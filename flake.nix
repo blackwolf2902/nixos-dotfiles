@@ -41,7 +41,6 @@
           inherit system;
           specialArgs = { 
             inherit inputs;
-            hardwareConfig = /etc/nixos/hardware-configuration.nix;
           };
           modules = [
             ./configuration.nix
