@@ -153,9 +153,7 @@ binds {
     Super+Shift+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn-sh "noctalia-shell ipc call lockScreen lock"; }
 
     Mod+Z { spawn-sh "flatpak run app.zen_browser.zen"; }
-    Mod+X { spawn "codium"; }
-    Mod+B { spawn "/run/current-system/sw/bin/bitwarden"; }
-
+    Mod+X { spawn "code"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }

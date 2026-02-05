@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -85,12 +86,12 @@ in
       (lib.optionals cfg.editors.enable [
         vscode
         zed-editor
-        # Note: Antigravity is typically installed via other means
+        antigravity
       ])
       ++
       # Browsers
       (lib.optionals cfg.browsers.enable [
-        # zen-browser # not available in nixpkgs
+        inputs.zen-browser.packages.${pkgs.system}.default
         google-chrome
       ])
       ++

@@ -2,144 +2,74 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 let
   cfg = config.workstation.baseline;
 in
 {
+  imports = [
+    # Core
+    ./core/nix-settings.nix
+    ./core/boot.nix
+    ./core/users.nix
+    ./core/security.nix
+    # Hardware
+    ./hardware/graphics.nix
+    ./hardware/bluetooth.nix
+    ./hardware/audio.nix
+    ./hardware/power.nix
+    # Desktop
+    ./desktop/fonts.nix
+    ./desktop/shell.nix
+    # Services
+    ./services/networking.nix
+    ./services/flatpak.nix
+  ];
+
   options.workstation.baseline.enable = lib.mkEnableOption "Baseline workstation configuration";
 
   config = lib.mkIf cfg.enable {
-    nix.settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      auto-optimise-store = true;
-      trusted-users = [
-        "root"
-        "shinobi"
-      ];
-    };
+    # Enable all submodules by default when baseline is enabled
+    workstation.core.nix-settings.enable = lib.mkDefault true;
+    workstation.core.boot.enable = lib.mkDefault true;
+    workstation.core.users.enable = lib.mkDefault true;
+    workstation.core.security.enable = lib.mkDefault true;
 
-    nix.optimise = {
-      automatic = true;
-      dates = [ "weekly" ];
-    };
+    workstation.hardware.graphics.enable = lib.mkDefault true;
+    workstation.hardware.bluetooth.enable = lib.mkDefault true;
+    workstation.hardware.audio.enable = lib.mkDefault true;
+    workstation.hardware.power.enable = lib.mkDefault true;
 
-    nixpkgs.config.allowUnfree = true;
+    workstation.desktop.fonts.enable = lib.mkDefault true;
+    workstation.desktop.shell.enable = lib.mkDefault true;
 
-    boot = {
-      loader = {
-        systemd-boot.enable = true;
-        efi.canTouchEfiVariables = true;
-      };
-      kernelPackages = pkgs.linuxPackages_latest;
-      kernelModules = [ "uvcvideo" ];
-    };
+    workstation.services.networking.enable = lib.mkDefault true;
+    workstation.services.flatpak.enable = lib.mkDefault true;
 
-    hardware.enableAllFirmware = true;
-    hardware.graphics = {
-      enable = true;
-      enable32Bit = true;
-      extraPackages = with pkgs; [
-        intel-media-driver
-        intel-vaapi-driver
-      ];
-    };
-
-    networking.networkmanager.enable = true;
-
-    nix.gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 14d";
-    };
-
+    # Locale and timezone
     time.timeZone = "Asia/Kolkata";
-
     i18n.defaultLocale = "en_US.UTF-8";
     console = {
       font = "Lat2-Terminus16";
       keyMap = "us";
     };
 
-    users.users.shinobi = {
-      isNormalUser = true;
-      shell = pkgs.zsh;
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-        "sound"
-        "video"
-        "audio"
-  ] ++ lib.optionals config.workstation.user-packages.virtualization.enable [ "libvirtd" ];    };
+    # Input and power services
+    services.libinput.enable = true;
+    services.upower.enable = true;
+    services.power-profiles-daemon.enable = false;
 
-    hardware.bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-      settings = {
-        General = {
-          Experimental = true;
-          FastConnectable = false;
-        };
-        Policy = {
-          AutoEnable = true;
-        };
-      };
-    };
-
-    # Auto-login configuration for Niri
-    services.displayManager.autoLogin = {
-      enable = true;
-      user = "shinobi";
-    };
-
-    # Disable getty on tty1 for auto-login to work properly
-    systemd.services."autovt@tty1".enable = false;
-    systemd.services."getty@tty1".enable = false;
-
-    fonts = {
-      enableDefaultPackages = true;
-      packages = with pkgs; [
-        nerd-fonts.jetbrains-mono
-        inter
-      ];
-      fontconfig = {
-        enable = true;
-        defaultFonts = {
-          sansSerif = [
-            "Inter"
-            "Noto Sans"
-          ];
-          serif = [ "Noto Serif" ];
-          monospace = [ "JetBrainsMono Nerd Font" ];
-        };
-      };
-      fontDir.enable = true;
-    };
-    
-    programs.firefox.enable = true;
-    programs.dconf.enable = true;
-    
-    programs.zsh.enable = true;
-    environment.pathsToLink = [ "/share/zsh" ];
-
+    # Core system tools
     environment.systemPackages = with pkgs; [
-      # Core system tools
       wget
       git
-      htop
+      btop
       curl
       tree
       eza
       ghostty
-      fastfetch
-      starship
       nixfmt-rfc-style
-      blueman
       ffmpeg
       whois
       parted
@@ -148,40 +78,11 @@ in
       pciutils
       file
       dig
-      oh-my-zsh
-      autojump
       screen
-      #utils
       lazygit
-      # File managers
       nemo
       yazi
     ];
-
-    services = {
-      tailscale.enable = true;
-      # pcscd.enable = true; # yubikey dep - disabled, no yubikey
-      libinput.enable = true;
-      upower.enable = true;
-      power-profiles-daemon.enable = false; # conflicts with TLP, use it as per need
-      pipewire = {
-        enable = true;
-        pulse.enable = true;
-        alsa.enable = true;
-      };
-    };
-
-    services.flatpak.enable = true;
-
-    systemd.services.flatpak-repo = {
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
-      path = [ pkgs.flatpak ];
-      script = ''
-        flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-      '';
-    };
 
     # System information
     environment.etc."nixos-info".text = ''

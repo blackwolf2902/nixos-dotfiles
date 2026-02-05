@@ -9,6 +9,8 @@ let
   cfg = config.workstation.niri;
 in
 {
+  imports = [ inputs.niri.nixosModules.niri ];
+
   options.workstation.niri.enable = lib.mkEnableOption "Niri-based workstation environment with Noctalia Shell";
 
   config = lib.mkIf cfg.enable {
@@ -17,6 +19,9 @@ in
     xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
     programs.niri.enable = true;
+
+    # Electron apps Wayland support (VSCode, Chrome, etc.)
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     programs.yazi = {
       enable = true;
