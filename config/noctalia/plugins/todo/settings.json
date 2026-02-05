@@ -1,0 +1,61 @@
+{
+  "pages": [
+    {
+      "id": 0,
+      "name": "General"
+    },
+    {
+      "id": 1,
+      "name": "Work Tasks"
+    }
+  ],
+  "current_page_id": 1,
+  "todos": [],
+  "count": 0,
+  "completedCount": 0,
+  "isExpanded": false,
+  "showCompleted": true,
+  "showBackground": true,
+  "useCustomColors": false,
+  "priorityColors": {
+    "high": {
+      "r": 1,
+      "g": 0.7058823704719543,
+      "b": 0.6705882549285889,
+      "a": 1,
+      "hsvHue": 0.01786111108958721,
+      "hsvSaturation": 0.3294117748737335,
+      "hsvValue": 1,
+      "hslHue": 0.01786111108958721,
+      "hslSaturation": 1,
+      "hslLightness": 0.8352941274642944,
+      "valid": true
+    },
+    "medium": {
+      "r": 0.7764706015586853,
+      "g": 0.7490196228027344,
+      "b": 1,
+      "a": 1,
+      "hsvHue": 0.6848888993263245,
+      "hsvSaturation": 0.250980406999588,
+      "hsvValue": 1,
+      "hslHue": 0.6848888993263245,
+      "hslSaturation": 1,
+      "hslLightness": 0.8745098114013672,
+      "valid": true
+    },
+    "low": {
+      "r": 0.7764706015586853,
+      "g": 0.7764706015586853,
+      "b": 0.7764706015586853,
+      "a": 1,
+      "hsvHue": -1,
+      "hsvSaturation": 0,
+      "hsvValue": 0.7764706015586853,
+      "hslHue": -1,
+      "hslSaturation": 0,
+      "hslLightness": 0.7764706015586853,
+      "valid": true
+    }
+  }
+}
