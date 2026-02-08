@@ -82,6 +82,10 @@ in
       lazygit
       nemo
       yazi
+      bat
+      ripgrep
+      fd
+      
     ];
 
     # System information

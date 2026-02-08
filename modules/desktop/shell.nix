@@ -14,6 +14,11 @@ in
     programs.zsh.enable = true;
     programs.dconf.enable = true;
     programs.firefox.enable = true;
+    
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
 
     environment.pathsToLink = [ "/share/zsh" ];
 

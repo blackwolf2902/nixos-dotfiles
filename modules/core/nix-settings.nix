@@ -10,6 +10,10 @@ in
   options.workstation.core.nix-settings.enable = lib.mkEnableOption "Nix flakes, optimisation, and garbage collection";
 
   config = lib.mkIf cfg.enable {
+    # Use Nix-index for package inference 
+    programs.command-not-found.enable = false;
+    programs.nix-index.enable = true;
+    
     nix.settings = {
       experimental-features = [
         "nix-command"
